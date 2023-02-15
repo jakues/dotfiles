@@ -10,7 +10,7 @@ This is personal dotfiles, created for GNOME desktop environment. I used themes 
 
 Installations need dependencies `git` and `wget`
 
-wget -qO- https://raw.githubusercontent.com/jakues/dotfiles/master/setup.sh | sh
+    wget -qO- https://raw.githubusercontent.com/jakues/dotfiles/master/setup.sh | sh
 
 
 <h2> Extensions </h2>

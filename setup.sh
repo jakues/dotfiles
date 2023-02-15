@@ -15,6 +15,11 @@ checkDependencies() {
             exit 1
         fi
     done
+
+    if [[ "${XDG_CURRENT_DESKTOP}" != "GNOME" ]]; then
+        printf "     Err : %s ! \n" "Not GNOME"
+        exit 1
+    fi
 }
 
 getPkg() {
