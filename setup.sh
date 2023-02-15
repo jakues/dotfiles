@@ -5,7 +5,6 @@ set -e
 dependencies=(
     git
     wget
-    curl
 )
 
 checkDependencies() {
@@ -28,7 +27,7 @@ getPkg() {
     fi
 
     cp ${HOME}/dotfiles/env ${local_bin}/myEnv
-    souce ${local_bin}/env
+    source ${local_bin}/myEnv
 
     pkg=(
         btop
@@ -86,10 +85,23 @@ setThemes() {
     ${PRIN} "${TICK}\n"
 }
 
+getAddons() {
+    local_dir="${HOME}/.local/bin"
+    source ${local_dir}/myEnv
+
+    # install nitch
+    nitchRepo="https://github.com/unxsh/nitch/releases/download/0.1.6/nitchNerd"
+    ${PRIN} " %b %s ..." "${INFO}" "Installing nitch"
+        get ${local_dir}/nitch ${nitchRepo} || error "Failed to install nitch"
+        chmod +x ${local_dir}/nitch
+    ${PRIN} "${TICK}\n"
+}
+
 main() {
     checkDependencies
     getPkg
     setThemes
+    getAddons
 }
 
 main
