@@ -77,6 +77,13 @@ setThemes() {
             cp -arf ${local_dir}/config/${c} ${HOME}/.config/
         ${PRIN} "${TICK}\n"
     done
+
+    ${PRIN} " %b %s ..." "${INFO}" "Installing gtk themes"
+        if ! [ -d "$HOME/.themes" ]; then
+            mkdir -p $HOME/.themes
+        fi
+        cp -arf ${local_dir}/themes/* ${HOME}/.themes/
+    ${PRIN} "${TICK}\n"
 }
 
 main() {
