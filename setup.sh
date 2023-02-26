@@ -5,6 +5,7 @@ set -e
 dependencies=(
     git
     wget
+    chsh
 )
 
 checkDependencies() {
@@ -48,7 +49,7 @@ getPkg() {
         for i in "${pkg[@]}"; do
             sudo dnf install ${i} -q -y || error "Failed to install ${i} !"
         done
-    ${PRIN} "${DONE}\n"
+    ${PRIN} " %b %s ${DONE}\n" "${INFO}" "Install pkg"
 }
 
 setThemes() {
@@ -58,7 +59,6 @@ setThemes() {
     themes=(
         "icons" # cursor theme
         "fonts" # fonts
-        #"extensions" # extensions
     )
 
     for t in ${themes[@]}; do
@@ -70,7 +70,6 @@ setThemes() {
     cfg=(
         btop
         cava
-        chsh
         kitty
         neofetch
         wofi
@@ -78,16 +77,16 @@ setThemes() {
 
     for c in ${cfg[@]}; do
         ${PRIN} " %b %s ..." "${INFO}" "Installing ${c} config"
-            cp -arf ${local_dir}/config/${c} ${HOME}/.config/
+            cp -arf ${local_files}/config/${c} ${HOME}/.config/
         ${PRIN} "${TICK}\n"
     done
 
-    ${PRIN} " %b %s ..." "${INFO}" "Installing gtk themes"
-        if ! [ -d ${HOME}/.themes ]; then
-            mkdir -p ${HOME}/.themes
-        fi
-        cp -arf ${local_dir}/themes/* ${HOME}/.themes/
-    ${PRIN} "${TICK}\n"
+    # ${PRIN} " %b %s ..." "${INFO}" "Installing gtk themes"
+    #     if ! [ -d ${HOME}/.themes ]; then
+    #         mkdir -p ${HOME}/.themes
+    #     fi
+    #     cp -arf ${local_files}/themes/* ${HOME}/.themes/
+    # ${PRIN} "${TICK}\n"
 }
 
 getAddons() {
@@ -95,15 +94,14 @@ getAddons() {
     source ${local_dir}/myEnv
 
     # install nitch
-    nitchRepo="https://github.com/unxsh/nitch/releases/download/0.1.6/nitchNerd"
     ${PRIN} " %b %s ..." "${INFO}" "Installing nitch"
-        get ${local_dir}/nitch ${nitchRepo} || error "Failed to install nitch"
+        cp ${HOME}/dotfiles/binaries/nitch ${local_dir}
         chmod +x ${local_dir}/nitch
     ${PRIN} "${TICK}\n"
 
     # install tty-clock
     ${PRIN} " %b %s ..." "${INFO}" "Installing tty-clock"
-        cp ${HOME}/dotfiles/tty-clock ${local_dir}
+        cp cp ${HOME}/dotfiles/binaries/tty-clock ${local_dir}
         chmod +x ${local_dir}/tty-clock
     ${PRIN} "${TICK}\n"
 
