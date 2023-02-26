@@ -20,5 +20,4 @@ Installations need dependencies `git` and `wget`
 - [Blur my Shell](https://extensions.gnome.org/extension/3193/blur-my-shell/)
 - [Focus](https://extensions.gnome.org/extension/3924/focus/)
 - [Rounded Window Corners](https://extensions.gnome.org/extension/5237/rounded-window-corners/)
-- [Bing Wallpaper](https://extensions.gnome.org/extension/1262/bing-wallpaper-changer/)
 - [User Themes](https://extensions.gnome.org/extension/19/user-themes/)

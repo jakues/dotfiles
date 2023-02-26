@@ -27,7 +27,7 @@ getPkg() {
     
     local_bin="${HOME}/.local/bin"
 
-    if [ -z ${local_bin} ]; then
+    if ! [ -d ${local_bin} ]; then
         mkdir ${local_bin}
     fi
 
@@ -58,7 +58,7 @@ setThemes() {
     themes=(
         "icons" # cursor theme
         "fonts" # fonts
-        "extensions" # extensions
+        #"extensions" # extensions
     )
 
     for t in ${themes[@]}; do
@@ -70,9 +70,9 @@ setThemes() {
     cfg=(
         btop
         cava
+        chsh
         kitty
         neofetch
-        spotifyd
         wofi
     )
 
@@ -83,8 +83,8 @@ setThemes() {
     done
 
     ${PRIN} " %b %s ..." "${INFO}" "Installing gtk themes"
-        if ! [ -d "$HOME/.themes" ]; then
-            mkdir -p $HOME/.themes
+        if ! [ -d ${HOME}/.themes ]; then
+            mkdir -p ${HOME}/.themes
         fi
         cp -arf ${local_dir}/themes/* ${HOME}/.themes/
     ${PRIN} "${TICK}\n"
@@ -100,6 +100,20 @@ getAddons() {
         get ${local_dir}/nitch ${nitchRepo} || error "Failed to install nitch"
         chmod +x ${local_dir}/nitch
     ${PRIN} "${TICK}\n"
+
+    # install tty-clock
+    ${PRIN} " %b %s ..." "${INFO}" "Installing tty-clock"
+        cp ${HOME}/dotfiles/tty-clock ${local_dir}
+        chmod +x ${local_dir}/tty-clock
+    ${PRIN} "${TICK}\n"
+
+    # install ohmyzsh
+    sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+    chsh -s $(which zsh)
+    cat > ${HOME}/.zshrc << EOF
+export PATH=$PATH:${HOME}/.local/bin
+alias clock="tty-clock -c -C 7"
+EOF
 }
 
 main() {
